@@ -15,7 +15,7 @@ function playerPlay() {
 function playRound(playerSelection, computerSelection) {
   const winner = getWinner(playerSelection, computerSelection);
   const message = generateMessage(playerSelection, computerSelection, winner);
-  return message;
+  return [message, winner];
 }
 
 // Returns the winner of the round
@@ -85,12 +85,40 @@ function generateMessage(playerSelection, computerSelection, winner) {
 
 // Plays the game
 function game() {
+  let scores = [0, 0];
   for (let index = 0; index < 5; index++) {
     playerSelection = playerPlay();
     computerSelection = computerPlay();
     console.log('Player: ' + playerSelection);
-    console.log('Comp: ' + computerSelection);
-    console.log(playRound(playerSelection, computerSelection));
+    console.log('Computer: ' + computerSelection);
+    const results = playRound(playerSelection, computerSelection);
+    if (results[1] === 'player') {
+      scores[0] += 1;
+    } else if (results[1] === 'computer') {
+      scores[1] += 1;
+    }
+    console.log(results[0]);
+  }
+  showScores(scores, calcWinner(scores));
+}
+
+// Calculates the winner
+function calcWinner(scores) {
+  return scores[0] > scores[1]
+    ? 'player'
+    : scores[1] > scores[0]
+    ? 'computer'
+    : 'draw';
+}
+
+// Displays the scores and the winner
+function showScores(scores, winner) {
+  console.log(`Player: ${scores[0]}`);
+  console.log(`Computer: ${scores[1]}`);
+  if (winner === 'draw') {
+    console.log('The match ends as a tie!');
+  } else {
+    console.log(`The ${winner} wins!`);
   }
 }
 
