@@ -91,13 +91,13 @@ function game() {
     computerSelection = computerPlay();
     console.log('Player: ' + playerSelection);
     console.log('Computer: ' + computerSelection);
-    const results = playRound(playerSelection, computerSelection);
-    if (results[1] === 'player') {
+    const [message, winner] = playRound(playerSelection, computerSelection);
+    if (winner === 'player') {
       scores[0] += 1;
-    } else if (results[1] === 'computer') {
+    } else if (winner === 'computer') {
       scores[1] += 1;
     }
-    console.log(results[0]);
+    console.log(message);
   }
   showScores(scores, calcWinner(scores));
 }
